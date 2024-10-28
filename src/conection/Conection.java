@@ -24,8 +24,9 @@ public class Conection {
             while (resultSet.next()) {
                 String nombre = resultSet.getString("name");
                 String dni = resultSet.getString("dni");
+                String email = resultSet.getString("email");
+                System.out.println("Nombre: " + nombre + " DNI: " + dni  + " Email: " + email);
 
-                System.out.println("Nombre: " + nombre + " DNI: " + dni);
             }
         } catch (SQLException e) {
             System.out.println(e);

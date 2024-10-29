@@ -4,13 +4,23 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+
+import utils.env;
 
 public class Conection {
     public static void main(String[] args) {
 
-        String url = "jdbc:mysql://autorack.proxy.rlwy.net:40787/railway";  
-        String username = "cliente"; 
-        String password = "1234";
+        //Importo las variables de configuración
+        HashMap<String, String> VarList = env.getEnvVar("dev");
+
+        /*
+        Esta parte es solo para entendér el código, luego hay que eliminarla y pasar
+        las variables directamente al conector
+        */ 
+        String url = VarList.get("dbUrl");  
+        String username = VarList.get("dbUsername"); 
+        String password = VarList.get("dbPassword");
 
         String query = "SELECT * FROM user";
 

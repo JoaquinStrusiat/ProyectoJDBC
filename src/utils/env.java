@@ -35,8 +35,14 @@ public class env {
 
     //Defino mi carpeta a leer
     String carpeta = "dev";
-    System.out.println(env.getEnvVar(carpeta).get("dbUrl"));
 
-  
+    //Obtengo la lista HasMap
+    HashMap<String, String> VarList = env.getEnvVar(carpeta);
+
+    //Obtengo el valor de la variable que nececito pasando por parámetro su nombre
+    String urlDataBAse = VarList.get("dbUrl");
+
+    //Imprimo por pantalla o utilizo la variable obtenida
+    System.out.println("URL de mi Base de Datos: " + urlDataBAse);  
   }
 }

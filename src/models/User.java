@@ -1,7 +1,6 @@
 package models;
 
 public class User {
-    private int id;
     private String name;
     private String last_name;
     private String email;

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import utils.env;
 
 public class ConectionDB {
+    private String route = "dev";
     private String url;
     private String user;
     private String password;
@@ -16,9 +17,9 @@ public class ConectionDB {
     private Statement statement;
     private ResultSet resultSet;
 
-    public ConectionDB(String file){
+    public ConectionDB(){
         //Obtengo por parámetros las variables a usar
-        HashMap<String, String> varList = env.getEnvVar(file);
+        HashMap<String, String> varList = env.getEnvVar(route);
         this.url = varList.get("dbUrl");
         this.user = varList.get("dbUsername");
         this.password = varList.get("dbPassword");
@@ -60,27 +61,5 @@ public class ConectionDB {
         } catch (Exception e) {
             return "Error de actualizacion: " + e;
         }
-    }
-
-
-    public static void main(String[] args) {
-        //Declaro la ruta de variables
-        String routeEnv = "dev";
-        //Declaro la consulta sql
-        String query = "SELECT * FROM user";
-        //Inicializo una conección con la ruta de variables a implementar
-        ConectionDB db = new ConectionDB(routeEnv);
-        //Manejo de la respuesta
-        try (ResultSet resultSet = db.executeQuery(query)) {
-            while (resultSet.next()) {
-                String nombre = resultSet.getString("name");
-                String dni = resultSet.getString("dni");
-                String email = resultSet.getString("email");
-                System.out.println("Nombre: " + nombre + " DNI: " + dni  + " Email: " + email);
-            }
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        db.closeConectionDB();        
     }
 }

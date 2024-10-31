@@ -1,4 +1,4 @@
-package controllers;
+package controllers.user;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,10 +7,9 @@ import java.util.Scanner;
 import conection.ConectionDB;
 
 
-public class userControls {
+/*public class userControls {
     //Declaramos los metodos del CRUD
-
-    //Metodo Read
+ * //Metodo Read
     public static void read(){
         //Declaro la query
         String query = "SELECT * FROM user";
@@ -31,9 +30,11 @@ public class userControls {
         db.closeConectionDB();
     }
 
+ */
+    
 /*CREAR NUEVO USER (SE AGREGO CIUDAD Y PAIS)*/
-
-    public static void addUser() {
+/*
+ * public static void addUser() {
     // Crear un objeto Scanner para leer datos desde el teclado
     Scanner scanner = new Scanner(System.in);
 
@@ -84,15 +85,18 @@ public class userControls {
     }
     scanner.close();
 }
-
-public static void create(String[] args) {
+    public static void create(String[] args) {
     // Llamar al método para agregar un usuario
     addUser();
 }
 
-/*ELIMINAR POR DNI */
+ */
+    
 
-public static void deleteUserByDNI() {
+
+/*ELIMINAR POR DNI */
+/*
+ * public static void deleteUserByDNI() {
     // Crear un objeto Scanner para leer el DNI desde el teclado
     Scanner scanner = new Scanner(System.in);
 
@@ -131,7 +135,9 @@ public static void delete(String[] args) {
     deleteUserByDNI();
 }
 }
+ */
 
 /* UPDATE FILTRADO POR DNI */
+
 
 

@@ -19,7 +19,6 @@ public class ConectionDB {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
-    private Object create;
 
 
     public ConectionDB(){
@@ -71,7 +70,6 @@ public class ConectionDB {
         try {
             return connection;
         } catch (Exception e) {
-            // TODO: handle exception
             return null;
         }
     }

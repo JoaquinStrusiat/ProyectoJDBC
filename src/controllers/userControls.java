@@ -1,12 +1,11 @@
 package controllers;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
-
 import conection.ConectionDB;
+
 
 public class userControls {
     //Declaramos los metodos del CRUD
@@ -32,6 +31,7 @@ public class userControls {
         db.closeConectionDB();
     }
 
+/*CREAR NUEVO USER (SE AGREGO CIUDAD Y PAIS)*/
 
     public static void addUser() {
     // Crear un objeto Scanner para leer datos desde el teclado
@@ -85,8 +85,53 @@ public class userControls {
     scanner.close();
 }
 
-public static void main(String[] args) {
+public static void create(String[] args) {
     // Llamar al método para agregar un usuario
     addUser();
 }
+
+/*ELIMINAR POR DNI */
+
+public static void deleteUserByDNI() {
+    // Crear un objeto Scanner para leer el DNI desde el teclado
+    Scanner scanner = new Scanner(System.in);
+
+    // Pedir el DNI del usuario a eliminar
+    System.out.print("Ingrese el DNI del usuario a eliminar: ");
+    String dni = scanner.nextLine();
+
+    // Consulta SQL para eliminar el usuario por DNI
+    String query = "DELETE FROM user WHERE dni = ?";
+
+    // Crear una instancia de la conexión
+    ConectionDB db = new ConectionDB();
+
+    // Ejecutar la eliminación usando PreparedStatement
+    try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
+        // Asignar el valor del parámetro
+        stmt.setString(1, dni);
+
+        // Ejecutar la eliminación
+        int rowsDeleted = stmt.executeUpdate();
+        if (rowsDeleted > 0) {
+            System.out.println("¡Usuario eliminado exitosamente!");
+        } else {
+            System.out.println("No se encontró un usuario con el DNI especificado.");
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al eliminar el usuario: " + e.getMessage());
+    } finally {
+        db.closeConectionDB();
+    }
+    scanner.close();
 }
+
+public static void delete(String[] args) {
+    // Llamar al método para agregar o eliminar un usuario
+    deleteUserByDNI();
+}
+}
+
+/* UPDATE FILTRADO POR DNI */
+
+

@@ -67,10 +67,6 @@ public class ConectionDB {
 }
 
     public Connection getConnection() {
-        try {
-            return connection;
-        } catch (Exception e) {
-            return null;
-        }
+        return connection;
     }
 }

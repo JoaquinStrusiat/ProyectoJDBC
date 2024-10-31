@@ -1,15 +1,49 @@
 package controllers.user;
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import conection.ConectionDB;
+import models.User;
 
 
-/*public class userControls {
+public class userControls {
     //Declaramos los metodos del CRUD
- * //Metodo Read
+    
+    // Metodo Create
+    public static void create() {
+        User newUser = User.getUser();
+
+        // Consulta SQL para insertar el usuario
+        String query = "INSERT INTO user (name, last_name, email, country, city, dni) VALUES (?, ?, ?, ?, ?, ?)";
+
+        // Crear una instancia de la conexión
+        ConectionDB db = new ConectionDB();
+
+        // Ejecutar la inserción usando PreparedStatement
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
+            // Asignar los valores de los parámetros
+            stmt.setString(1, newUser.getName());
+            stmt.setString(2, newUser.getLast_name());
+            stmt.setString(3, newUser.getEmail());
+            stmt.setString(4, newUser.getCountry());
+            stmt.setString(5, newUser.getCity());
+            stmt.setInt(6, newUser.getDni());
+
+            // Ejecutar la inserción
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("¡Usuario agregado exitosamente!");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al insertar los datos: " + e.getMessage());
+        } finally {
+            db.closeConectionDB();
+        }
+    }
+
+    //Metodo Read
     public static void read(){
         //Declaro la query
         String query = "SELECT * FROM user";
@@ -30,114 +64,51 @@ import conection.ConectionDB;
         db.closeConectionDB();
     }
 
- */
-    
-/*CREAR NUEVO USER (SE AGREGO CIUDAD Y PAIS)*/
-/*
- * public static void addUser() {
-    // Crear un objeto Scanner para leer datos desde el teclado
-    Scanner scanner = new Scanner(System.in);
 
-    // Pedir datos al usuario
-    System.out.print("Ingrese el nombre: ");
-    String name = scanner.nextLine();
 
-    System.out.print("Ingrese el apellido: ");
-    String lastName = scanner.nextLine();
+    /*ELIMINAR POR DNI */
 
-    System.out.print("Ingrese el DNI: ");
-    String dni = scanner.nextLine();
+    public static void deleteUserByDNI() {
+        // Crear un objeto Scanner para leer el DNI desde el teclado
+        Scanner scanner = new Scanner(System.in);
 
-    System.out.print("Ingrese el email: ");
-    String email = scanner.nextLine();
+        // Pedir el DNI del usuario a eliminar
+        System.out.print("Ingrese el DNI del usuario a eliminar: ");
+        String dni = scanner.nextLine();
 
-    System.out.print("Ingrese el pais:");
-    String country = scanner.nextLine();
+        // Consulta SQL para eliminar el usuario por DNI
+        String query = "DELETE FROM user WHERE dni = ?";
 
-    System.out.print("Ingrese su ciudad:");
-    String city = scanner.nextLine();
+        // Crear una instancia de la conexión
+        ConectionDB db = new ConectionDB();
 
-    // Consulta SQL para insertar el usuario
-    String query = "INSERT INTO user (name, last_name, dni, email) VALUES (?, ?, ?, ?)";
+        // Ejecutar la eliminación usando PreparedStatement
+        try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
+            // Asignar el valor del parámetro
+            stmt.setString(1, dni);
 
-    // Crear una instancia de la conexión
-    ConectionDB db = new ConectionDB();
-
-    // Ejecutar la inserción usando PreparedStatement
-    try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
-        // Asignar los valores de los parámetros
-        stmt.setString(1, name);
-        stmt.setString(2, lastName);
-        stmt.setString(3, dni);
-        stmt.setString(4, email);
-        stmt.setString(5, country);
-        stmt.setString(6, city);
-
-        // Ejecutar la inserción
-        int rowsInserted = stmt.executeUpdate();
-        if (rowsInserted > 0) {
-            System.out.println("¡Usuario agregado exitosamente!");
+            // Ejecutar la eliminación
+            int rowsDeleted = stmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("¡Usuario eliminado exitosamente!");
+            } else {
+                System.out.println("No se encontró un usuario con el DNI especificado.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar el usuario: " + e.getMessage());
+        } finally {
+            db.closeConectionDB();
         }
-    } catch (SQLException e) {
-        System.err.println("Error al insertar los datos: " + e.getMessage());
-    } finally {
-        db.closeConectionDB();
+        scanner.close();
     }
-    scanner.close();
-}
-    public static void create(String[] args) {
-    // Llamar al método para agregar un usuario
-    addUser();
-}
 
- */
-    
-
-
-/*ELIMINAR POR DNI */
-/*
- * public static void deleteUserByDNI() {
-    // Crear un objeto Scanner para leer el DNI desde el teclado
-    Scanner scanner = new Scanner(System.in);
-
-    // Pedir el DNI del usuario a eliminar
-    System.out.print("Ingrese el DNI del usuario a eliminar: ");
-    String dni = scanner.nextLine();
-
-    // Consulta SQL para eliminar el usuario por DNI
-    String query = "DELETE FROM user WHERE dni = ?";
-
-    // Crear una instancia de la conexión
-    ConectionDB db = new ConectionDB();
-
-    // Ejecutar la eliminación usando PreparedStatement
-    try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
-        // Asignar el valor del parámetro
-        stmt.setString(1, dni);
-
-        // Ejecutar la eliminación
-        int rowsDeleted = stmt.executeUpdate();
-        if (rowsDeleted > 0) {
-            System.out.println("¡Usuario eliminado exitosamente!");
-        } else {
-            System.out.println("No se encontró un usuario con el DNI especificado.");
-        }
-    } catch (SQLException e) {
-        System.err.println("Error al eliminar el usuario: " + e.getMessage());
-    } finally {
-        db.closeConectionDB();
+    public static void main(String[] args) {
+        userControls.create();
     }
-    scanner.close();
 }
+ 
 
-public static void delete(String[] args) {
-    // Llamar al método para agregar o eliminar un usuario
-    deleteUserByDNI();
-}
-}
- */
 
-/* UPDATE FILTRADO POR DNI */
 
 
 

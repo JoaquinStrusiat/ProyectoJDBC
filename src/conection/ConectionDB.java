@@ -2,10 +2,13 @@ package conection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+
+import controllers.userControls;
 import utils.env;
 
 public class ConectionDB {
@@ -16,6 +19,8 @@ public class ConectionDB {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
+    private Object create;
+
 
     public ConectionDB(){
         //Obtengo por parámetros las variables a usar
@@ -53,13 +58,21 @@ public class ConectionDB {
         return resultSet;
     }
 
-    public String executeUpdate(String query){
+    public String executeUpdate(String query) {
         try {
             int update = statement.executeUpdate(query);
-            String updatetoString = Integer.toString(update);
-            return "Número de actualizaciones: " + updatetoString;
+            return "Número de filas afectadas: " + update;
+        } catch (SQLException e) {
+            return "Error en la actualización: " + e.getMessage();
+        }
+}
+
+    public Connection getConnection() {
+        try {
+            return connection;
         } catch (Exception e) {
-            return "Error de actualizacion: " + e;
+            // TODO: handle exception
+            return null;
         }
     }
 }

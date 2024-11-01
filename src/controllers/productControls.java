@@ -133,8 +133,8 @@ public class productControls {
     public static void main(String[] args) {
         // Ejemplo de uso
        // addProduct();
-       // readProducts();
+        readProducts();
        // modifyProduct();
-        deleteProduct();
+        //deleteProduct();
 }
 }

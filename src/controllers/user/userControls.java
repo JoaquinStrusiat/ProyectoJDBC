@@ -43,6 +43,7 @@ public class userControls {
         }
     }
 
+
     //Metodo Read
     public static void read(){
         //Declaro la query
@@ -63,8 +64,6 @@ public class userControls {
         }
         db.closeConectionDB();
     }
-
-
 
     /*ELIMINAR POR DNI */
 
@@ -103,7 +102,7 @@ public class userControls {
     }
 
     public static void main(String[] args) {
-        userControls.create();
+        userControls.read2();
     }
 }
  

@@ -7,7 +7,6 @@ import java.util.Scanner;
 import conection.ConectionDB;
 import models.User;
 
-
 public class userControls {
     //Declaramos los metodos del CRUD
     
@@ -43,7 +42,6 @@ public class userControls {
         }
     }
 
-
     //Metodo Read
     public static void read(){
         //Declaro la query
@@ -66,7 +64,6 @@ public class userControls {
     }
 
     /*ELIMINAR POR DNI */
-
     public static void deleteUserByDNI() {
         // Crear un objeto Scanner para leer el DNI desde el teclado
         Scanner scanner = new Scanner(System.in);
@@ -102,7 +99,6 @@ public class userControls {
     }
 
     public static void main(String[] args) {
-        userControls.read2();
     }
 }
  

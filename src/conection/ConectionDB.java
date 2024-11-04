@@ -1,16 +1,18 @@
 package conection;
 
-import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 
 import utils.env;
 
 public class ConectionDB {
+    //En la linea de abajo defino la carpeta con las variables de entorno a utilizar
     private String route = "dev";
     private String url;
     private String user;
@@ -18,6 +20,7 @@ public class ConectionDB {
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
+    private PreparedStatement prepareStatement;
 
 
     public ConectionDB(){
@@ -56,16 +59,12 @@ public class ConectionDB {
         return resultSet;
     }
 
-    public String executeUpdate(String query) {
+    public PreparedStatement executeChange(String query) {
         try {
-            int update = statement.executeUpdate(query);
-            return "Número de filas afectadas: " + update;
+            prepareStatement = connection.prepareStatement(query);
         } catch (SQLException e) {
-            return "Error en la actualización: " + e.getMessage();
+            System.out.println("Error de consulta: " + e);
         }
-}
-
-    public Connection getConnection() {
-        return connection;
+        return prepareStatement;
     }
 }

@@ -1,9 +1,9 @@
-package controllers.user;
+package controllers;
+import java.util.Scanner;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 import conection.ConectionDB;
 import models.User;
 
@@ -21,7 +21,7 @@ public class userControls {
         ConectionDB db = new ConectionDB();
 
         // Ejecutar la inserción usando PreparedStatement
-        try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = db.executeChange(query)) {
             // Asignar los valores de los parámetros
             stmt.setString(1, newUser.getName());
             stmt.setString(2, newUser.getLast_name());
@@ -48,6 +48,9 @@ public class userControls {
         String query = "SELECT * FROM user";
         //Inicializo una conección con la ruta de variables a implementar
         ConectionDB db = new ConectionDB();
+        //Head de la tabla
+        System.out.printf("%-20s %-15s %-15s %-20s", "Nombre", "Apellido", "DNI", "Email");
+        System.out.println("");
         //Manejo de la respuesta
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
@@ -55,7 +58,8 @@ public class userControls {
                 String lastName = resultSet.getString("last_name");
                 String dni = resultSet.getString("dni");
                 String email = resultSet.getString("email");
-                System.out.println("Nombre: " + name + " Apellido: " + lastName + " DNI: " + dni  + " Email: " + email);
+                String output = String.format("%-20s %-15s %-15s %-20s", name, lastName, dni, email);
+                System.out.println(output);
             }
         } catch (Exception e) {
             System.err.println(e);
@@ -63,8 +67,8 @@ public class userControls {
         db.closeConectionDB();
     }
 
-    /*ELIMINAR POR DNI */
-    public static void deleteUserByDNI() {
+    //Metodo delete
+    public static void deleteByDni() {
         // Crear un objeto Scanner para leer el DNI desde el teclado
         Scanner scanner = new Scanner(System.in);
 
@@ -79,7 +83,7 @@ public class userControls {
         ConectionDB db = new ConectionDB();
 
         // Ejecutar la eliminación usando PreparedStatement
-        try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = db.executeChange(query)) {
             // Asignar el valor del parámetro
             stmt.setString(1, dni);
 
@@ -99,6 +103,7 @@ public class userControls {
     }
 
     public static void main(String[] args) {
+        userControls.read();
     }
 }
  

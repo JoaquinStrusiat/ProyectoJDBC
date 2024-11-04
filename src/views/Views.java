@@ -6,5 +6,6 @@ public class Views {
               
     System.out.println("Menu de CRUD");
     System.out.println("INGRESE LA OPERACION A REALIZAR");
-    
+
+    }
 }

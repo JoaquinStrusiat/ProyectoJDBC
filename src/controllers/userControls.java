@@ -11,8 +11,8 @@ public class userControls {
     //Declaramos los metodos del CRUD
     
     // Metodo Create
-    public static void create() {
-        User newUser = User.getUser();
+    public static void createUser() {
+        User newUser = User.createUser();
 
         // Consulta SQL para insertar el usuario
         String query = "INSERT INTO user (name, last_name, email, country, city, dni) VALUES (?, ?, ?, ?, ?, ?)";
@@ -43,22 +43,23 @@ public class userControls {
     }
 
     //Metodo Read
-    public static void read(){
+    public static void readUsers(){
         //Declaro la query
         String query = "SELECT * FROM user";
         //Inicializo una conección con la ruta de variables a implementar
         ConectionDB db = new ConectionDB();
         //Head de la tabla
-        System.out.printf("%-20s %-15s %-15s %-20s", "Nombre", "Apellido", "DNI", "Email");
+        System.out.printf("%-3s %-20s %-15s %-15s %-20s", "ID","Nombre", "Apellido", "DNI", "Email");
         System.out.println("");
         //Manejo de la respuesta
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String lastName = resultSet.getString("last_name");
                 String dni = resultSet.getString("dni");
                 String email = resultSet.getString("email");
-                String output = String.format("%-20s %-15s %-15s %-20s", name, lastName, dni, email);
+                String output = String.format("%-3s %-20s %-15s %-15s %-20s", id, name, lastName, dni, email);
                 System.out.println(output);
             }
         } catch (Exception e) {
@@ -68,16 +69,25 @@ public class userControls {
     }
 
     //Metodo delete
-    public static void deleteByDni() {
-        // Crear un objeto Scanner para leer el DNI desde el teclado
-        Scanner scanner = new Scanner(System.in);
+    public static void deleteUserById() {
+        //Muestro por pantalla los usuarios para selecionar por id el que se quiera eliminar
+        userControls.readUsers();
 
-        // Pedir el DNI del usuario a eliminar
-        System.out.print("Ingrese el DNI del usuario a eliminar: ");
-        String dni = scanner.nextLine();
+        int id;
+        while (true) {
+            try {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("\nIngrese el ID del usuario a eliminar: ");
+                id = scanner.nextInt();
+                scanner.close();
+                break;
+            } catch (Exception e) {
+                System.out.println("\nEntrada no valida: ");
+            }
+        }
 
-        // Consulta SQL para eliminar el usuario por DNI
-        String query = "DELETE FROM user WHERE dni = ?";
+        // Consulta SQL para eliminar el usuario por ID
+        String query = "DELETE FROM user WHERE id = ?";
 
         // Crear una instancia de la conexión
         ConectionDB db = new ConectionDB();
@@ -85,7 +95,7 @@ public class userControls {
         // Ejecutar la eliminación usando PreparedStatement
         try (PreparedStatement stmt = db.executeChange(query)) {
             // Asignar el valor del parámetro
-            stmt.setString(1, dni);
+            stmt.setInt(1, id);
 
             // Ejecutar la eliminación
             int rowsDeleted = stmt.executeUpdate();
@@ -99,11 +109,10 @@ public class userControls {
         } finally {
             db.closeConectionDB();
         }
-        scanner.close();
     }
 
     public static void main(String[] args) {
-        userControls.read();
+        userControls.deleteUserById();
     }
 }
  

@@ -20,40 +20,37 @@ public class User {
         this.dni = dni;
     }
 
-    public static User getUser(){
-        // Crear un objeto Scanner para leer datos desde el teclado
-        Scanner scanner = new Scanner(System.in);
-
-        // Pedir datos al usuario
-        System.out.print("Ingrese el nombre: ");
-        String name = scanner.nextLine();
-
-        System.out.print("Ingrese el apellido: ");
-        String last_name = scanner.nextLine();
-
-        System.out.print("Ingrese el email: ");
-        String email = scanner.nextLine();
-
-        System.out.print("Ingrese el pais:");
-        String country = scanner.nextLine();
-
-        System.out.print("Ingrese su ciudad:");
-        String city = scanner.nextLine();
-
-        int dni = 0;
+    public static User createUser(){
+        User user;
         while (true) {
-            System.out.print("Ingrese el DNI: ");
             try {
-                dni = scanner.nextInt();
+                // Crear un objeto Scanner para leer datos desde el teclado
+                Scanner scanner = new Scanner(System.in);
+                // Pedir datos al usuario
+                System.out.print("Ingrese el nombre: ");
+                String name = scanner.nextLine();
+
+                System.out.print("Ingrese el apellido: ");
+                String last_name = scanner.nextLine();
+
+                System.out.print("Ingrese el email: ");
+                String email = scanner.nextLine();
+
+                System.out.print("Ingrese el pais: ");
+                String country = scanner.nextLine();
+
+                System.out.print("Ingrese su ciudad: ");
+                String city = scanner.nextLine();
+
+                System.out.print("Ingrese el DNI: ");
+                int dni = scanner.nextInt();
+                scanner.close();
+                user = new User(name, last_name, email, country, city, dni);
                 break;
             } catch (Exception e) {
-                System.out.print("\"Entrada inválida. Por favor, ingresa un número");
-                scanner.next(); // Limpia el buffer
+                System.out.print("\"Entrada no valida. ingrese nuevamente los datos: ");
             }
         }
-        scanner.close();
-
-        User user = new User(name, last_name, email, country, city, dni);
         return user;
     }
 
@@ -79,11 +76,5 @@ public class User {
 
     public int getDni() {
         return dni;
-    }
-
-    public static User getProduct() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProduct'");
-    }
-    
+    }    
 }

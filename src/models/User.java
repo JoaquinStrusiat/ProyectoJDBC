@@ -80,5 +80,10 @@ public class User {
     public int getDni() {
         return dni;
     }
+
+    public static User getProduct() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getProduct'");
+    }
     
 }

@@ -67,4 +67,9 @@ public class ConectionDB {
         }
         return prepareStatement;
     }
+
+    public Connection getConnection() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getConnection'");
+    }
 }

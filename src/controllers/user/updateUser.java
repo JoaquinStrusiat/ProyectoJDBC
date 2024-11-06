@@ -11,7 +11,7 @@ public class updateUser {
     // Método para actualizar los datos de un usuario
     public boolean updateUsuario(int id, String name, String lastName, String dni, String email) {
 
-        String sql = "UPDATE FROM user SET name = ?, last_name = ?, dni = ?, email = ? WHERE id = ?";
+        String sql = "UPDATE FROM users SET name = ?, last_name = ?, dni = ?, email = ? WHERE id = ?";
         ConectionDB db = new ConectionDB();
 
         try (Connection connection = db.getConnection(); // Get a connection

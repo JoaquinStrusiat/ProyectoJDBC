@@ -20,7 +20,7 @@ public class productControls {
         Product newProduct = Product.createProduct();
         int dni = user.getDni();
         //// Consulta SQL para insertar el usuario
-        String query = "INSERT INTO product (name, description, price, category, id_user) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO products (name, description, price, category, id) VALUES (?, ?, ?, ?, ?)";
 
         // Crear una instancia de la conexión
         ConectionDB db = new ConectionDB();
@@ -28,7 +28,7 @@ public class productControls {
         // Ejecutar la inserción usando PreparedStatement
         try (
             //obtenemos el id del usuario
-            ResultSet res = db.executeQuery("SELECT id FROM railway.user WHERE dni = " + dni);
+            ResultSet res = db.executeQuery("SELECT id FROM railway.users WHERE dni = " + dni);
             PreparedStatement stmt = db.executeChange(query);
             ) {
             stmt.setString(1, newProduct.getnameProduct());
@@ -115,45 +115,50 @@ public class productControls {
     }
 
    
-    /* 
     
-     *  // Método para modificar (Modify) un producto por nombre
-    public static void modifyProduct() {
-        Scanner scanner = new Scanner(System.in);
+    
+// Método para modificar (Modify) un producto por nombre
+public static void modifyProduct() {
+    Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Ingrese el nombre del producto que desea modificar: ");
-        String name = scanner.nextLine();
+    System.out.print("Ingrese el nombre actual del producto que desea modificar: ");
+    String currentName = scanner.nextLine();
 
-        System.out.print("Ingrese la nueva descripción del producto: ");
-        String newDescription = scanner.nextLine();
+    System.out.print("Ingrese el nuevo nombre del producto: ");
+    String newName = scanner.nextLine();
 
-        System.out.print("Ingrese el nuevo precio del producto: ");
-        double newPrice = scanner.nextDouble();
+    System.out.print("Ingrese la nueva descripción del producto: ");
+    String newDescription = scanner.nextLine();
 
-        String query = "UPDATE products SET description = ?, price = ? WHERE name = ?";
-        ConectionDB db = new ConectionDB();
+    System.out.print("Ingrese el nuevo precio del producto: ");
+    double newPrice = scanner.nextDouble();
 
-        try (PreparedStatement stmt = db.getConnection().prepareStatement(query)) {
-            stmt.setString(1, newDescription);
-            stmt.setDouble(2, newPrice);
-            stmt.setString(3, name);
+    // Consulta SQL para actualizar el producto por nombre
+    String query = "UPDATE products SET name = ?, description = ?, price = ? WHERE name = ?";
+    ConectionDB db = new ConectionDB();
 
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                System.out.println("¡Producto actualizado exitosamente!");
-            } else {
-                System.out.println("Producto no encontrado.");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al actualizar el producto: " + e.getMessage());
-        } finally {
-            db.closeConectionDB();
+    // Ejecutar la actualización usando PreparedStatement
+    try (PreparedStatement stmt = db.executeChange(query)) {
+        stmt.setString(1, newName);
+        stmt.setString(2, newDescription);
+        stmt.setDouble(3, newPrice);
+        stmt.setString(4, currentName);
+
+        // Ejecutar la actualización
+        int rowsUpdated = stmt.executeUpdate();
+        if (rowsUpdated > 0) {
+            System.out.println("¡Producto actualizado exitosamente!");
+        } else {
+            System.out.println("Producto no encontrado.");
         }
-        scanner.close();
+    } catch (SQLException e) {
+        System.err.println("Error al actualizar el producto: " + e.getMessage());
+    } finally {
+        db.closeConectionDB();
     }
-   */
-
+    scanner.close();
+}
     public static void main(String[] args) {
-        productControls.readProducts();
+        productControls.modifyProduct();
     }
 }

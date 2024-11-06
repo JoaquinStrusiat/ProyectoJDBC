@@ -15,7 +15,7 @@ public class userControls {
         User newUser = User.createUser();
 
         // Consulta SQL para insertar el usuario
-        String query = "INSERT INTO user (name, last_name, email, country, city, dni) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users (name, last_name, email, country, city, dni) VALUES (?, ?, ?, ?, ?, ?)";
 
         // Crear una instancia de la conexión
         ConectionDB db = new ConectionDB();
@@ -45,7 +45,7 @@ public class userControls {
     //Metodo Read
     public static void readUsers(){
         //Declaro la query
-        String query = "SELECT * FROM user";
+        String query = "SELECT * FROM users";
         //Inicializo una conección con la ruta de variables a implementar
         ConectionDB db = new ConectionDB();
         //Head de la tabla
@@ -87,7 +87,7 @@ public class userControls {
         }
 
         // Consulta SQL para eliminar el usuario por ID
-        String query = "DELETE FROM user WHERE id = ?";
+        String query = "DELETE FROM users WHERE id = ?";
 
         // Crear una instancia de la conexión
         ConectionDB db = new ConectionDB();
@@ -112,12 +112,6 @@ public class userControls {
     }
 
     public static void main(String[] args) {
-        userControls.deleteUserById();
+        userControls.readUsers();
     }
-}
- 
-
-
-
-
-
+} 

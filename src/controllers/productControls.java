@@ -103,16 +103,6 @@ public class productControls {
     }
 
    
-
-
-
-
-
-
-
-
-
-
     /* 
     
      *  // Método para modificar (Modify) un producto por nombre

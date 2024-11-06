@@ -16,21 +16,33 @@ public class productControls {
     // METODO CREATE (POST)
 
     // Método para agregar (Add) un nuevo producto
-    public static void createProduct() {
+    public static void createProduct(User user) {
         Product newProduct = Product.createProduct();
-
+        int dni = user.getDni();
         //// Consulta SQL para insertar el usuario
-        String query = "INSERT INTO product (name, description, price, category) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO product (name, description, price, category, id_user) VALUES (?, ?, ?, ?, ?)";
 
         // Crear una instancia de la conexión
         ConectionDB db = new ConectionDB();
 
         // Ejecutar la inserción usando PreparedStatement
-        try (PreparedStatement stmt = db.executeChange(query)) {
+        try (
+            //obtenemos el id del usuario
+            ResultSet res = db.executeQuery("SELECT id FROM railway.user WHERE dni = " + dni);
+            PreparedStatement stmt = db.executeChange(query);
+            ) {
             stmt.setString(1, newProduct.getnameProduct());
             stmt.setString(2, newProduct.getDescription());
             stmt.setDouble(3, newProduct.getPrice());
-            //stmt.setString(4, newProduct.getCategory());
+            //printeo las categorias con un -- categoryControls.readCategories()
+            // switch crean las dos primeras variables... 
+                //1- selecionar un id categoria existente
+                //stmt.setInt(4, id_category);
+                //2- crear una categoría nueva -- String nameCategor = categoriesControls.createCategory()
+                // Agregarla a la base de datos --  int id_category = categoriesControls.getId(nameCategor)
+                //stmt.setInt(4, id_category);
+            stmt.setInt(5, res.getInt("id"));
+
 
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {

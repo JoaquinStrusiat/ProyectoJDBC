@@ -4,36 +4,53 @@ import java.util.Scanner;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
 import conection.ConectionDB;
 import models.User;
 
 public class userControls {
-    //Declaramos los metodos del CRUD
     
     // Metodo Create
     public static void createUser() {
         User newUser = User.createUser();
-
-        // Consulta SQL para insertar el usuario
-        String query = "INSERT INTO users (name, last_name, email, country, city, dni) VALUES (?, ?, ?, ?, ?, ?)";
-
+    
         // Crear una instancia de la conexión
         ConectionDB db = new ConectionDB();
-
+    
         // Ejecutar la inserción usando PreparedStatement
-        try (PreparedStatement stmt = db.executeChange(query)) {
-            // Asignar los valores de los parámetros
-            stmt.setString(1, newUser.getName());
-            stmt.setString(2, newUser.getLast_name());
-            stmt.setString(3, newUser.getEmail());
-            stmt.setString(4, newUser.getCountry());
-            stmt.setString(5, newUser.getCity());
-            stmt.setInt(6, newUser.getDni());
-
-            // Ejecutar la inserción
-            int rowsInserted = stmt.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("¡Usuario agregado exitosamente!");
+        try (
+            PreparedStatement stmtUser = db.executeChange(
+                "INSERT INTO users (name, last_name, email, country, city, dni) VALUES (?, ?, ?, ?, ?, ?)",
+                Statement.RETURN_GENERATED_KEYS // Permite obtener las claves generadas automáticamente
+            );
+            PreparedStatement stmPws = db.executeChange("INSERT INTO passwords (id_usuario, password) VALUES (?, ?)")
+        ) {
+            // guardo al usuario
+            stmtUser.setString(1, newUser.getName());
+            stmtUser.setString(2, newUser.getLast_name());
+            stmtUser.setString(3, newUser.getEmail());
+            stmtUser.setString(4, newUser.getCountry());
+            stmtUser.setString(5, newUser.getCity());
+            stmtUser.setInt(6, newUser.getDni());
+            int rowsInsertedUser = stmtUser.executeUpdate();
+    
+            // Obtener el ID generado automáticamente
+            try (ResultSet resUser = stmtUser.getGeneratedKeys()) {
+                if (resUser.next()) {
+                    int userId = resUser.getInt(1); // Obtiene el ID generado
+    
+                    // Inserta la contraseña con el ID de usuario
+                    stmPws.setInt(1, userId);
+                    stmPws.setString(2, newUser.getPassword());
+                    int rowsInsertedPws = stmPws.executeUpdate();
+    
+                    if (rowsInsertedUser > 0 && rowsInsertedPws > 0) {
+                        System.out.println("¡Usuario creado exitosamente!");
+                    }
+                } else {
+                    throw new SQLException("Error al obtener el ID del usuario insertado.");
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error al insertar los datos: " + e.getMessage());
@@ -41,6 +58,7 @@ public class userControls {
             db.closeConectionDB();
         }
     }
+    
 
     //Metodo Read
     public static void readUsers(){
@@ -112,6 +130,6 @@ public class userControls {
     }
 
     public static void main(String[] args) {
-        userControls.readUsers();
+        userControls.createUser();
     }
 } 

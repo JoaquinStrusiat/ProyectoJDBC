@@ -64,7 +64,7 @@ public class productControls {
         System.out.println("");
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
-                int productID = resultSet.getInt("productID");
+                int productID = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
                 double price = resultSet.getDouble("price");

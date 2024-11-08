@@ -1,11 +1,9 @@
 package controllers;
-import java.util.Scanner;
-
+import conection.ConectionDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import conection.ConectionDB;
+import java.util.Scanner;
 import models.User;
 
 public class userControls {

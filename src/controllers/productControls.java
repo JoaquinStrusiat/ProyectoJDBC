@@ -159,6 +159,6 @@ public static void modifyProduct() {
     scanner.close();
 }
     public static void main(String[] args) {
-        productControls.modifyProduct();
+        productControls.readProducts();
     }
 }

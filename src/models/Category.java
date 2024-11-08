@@ -27,6 +27,7 @@ public class Category {
         return cat;
     }
 
+
     public String getName() {
         return name;
     }

@@ -153,42 +153,110 @@ public class userControls {
                         stmtUser.setString(1, nombre);
                         stmtUser.setInt(2, id);
                         stmtUser.executeUpdate();
-                        System.out.println("Actualización exitosa.");
+                        System.out.println("Actualización exitosa de nombre.");
                     } catch (SQLException e) {
                         System.out.println("Error de actualización: " + e.getMessage());
                     }
                     break;
+
                 case 2:
                     System.out.print("Ingrese el nuevo apellido: ");
                     String apellido = scanner.nextLine();
-                    
+                    String query2 = "UPDATE users SET last_name = ? WHERE id = ?";
+                    try (PreparedStatement stmtUser = db.executeChange(query2)){ 
+                        stmtUser.setString(1, apellido);
+                        stmtUser.setInt(2, id);
+                        stmtUser.executeUpdate();
+                        System.out.println("Actualización exitosa de Apellido.");
+                        
+                    } catch (Exception e) {
+                        System.out.println("Error de actualización: " + e.getMessage());
+                    }
+
                     break;
                 case 3:
                     System.out.print("Ingrese el nuevo DNI: ");
                     int dni = scanner.nextInt();
-                    scanner.nextLine(); // Limpiar el salto de línea
+                    //scanner.nextLine(); // Limpiar el salto de línea
+                    String query3 = "UPDATE users SET dni = ? WHERE id = ?";
+                    try (PreparedStatement stmtUser = db.executeChange(query3)){ 
+                        stmtUser.setInt(1, dni);
+                        stmtUser.setInt(2, id);
+                        stmtUser.executeUpdate();
+                        System.out.println("Actualización exitosa de dni.");
+                        
+                    } catch (Exception e) {
+                        System.out.println("Error de actualización en dni: " + e.getMessage());
+                    }
+
                     
                     break;
                 case 4:
                     System.out.print("Ingrese el nuevo email: ");
                     String email = scanner.nextLine();
-                    
+                    String query4 = "UPDATE users SET email = ? WHERE id = ?"; 
+                    // Elimina la coma y corrige "UPDATE FROM"
+                    try (PreparedStatement stmtUser = db.executeChange(query4)) {
+                        stmtUser.setString(1, email);
+                        stmtUser.setInt(2, id);
+                        stmtUser.executeUpdate();
+                        System.out.println("Actualización exitosa de email.");
+                    } catch (SQLException e) {
+                        System.out.println("Error de actualización de email: " + e.getMessage());
+                    }
                     break;
+
                 case 5:
                     System.out.print("Ingrese el nuevo país: ");
-                    String pais = scanner.nextLine();
+                    String country = scanner.nextLine();
                     
+                    String query5 = "UPDATE users SET country = ? WHERE id = ?"; 
+                    // Elimina la coma y corrige "UPDATE FROM"
+                    try (PreparedStatement stmtUser = db.executeChange(query5)) {
+                        stmtUser.setString(1, country );
+                        stmtUser.setInt(2, id);
+                        stmtUser.executeUpdate();
+                        System.out.println("Actualización exitosa de pais.");
+                    } catch (SQLException e) {
+                        System.out.println("Error de actualización de pais: " + e.getMessage());
+                    }
+
                     break;
+                    
                 case 6:
                     System.out.print("Ingrese la nueva ciudad: ");
-                    String ciudad = scanner.nextLine();
-                    
+                    String city = scanner.nextLine();
+
+                    String query6 = "UPDATE users SET city = ? WHERE id = ?"; 
+                    // Elimina la coma y corrige "UPDATE FROM"
+                    try (PreparedStatement stmtUser = db.executeChange(query6)) {
+                        stmtUser.setString(1, city);
+                        stmtUser.setInt(2, id);
+                        stmtUser.executeUpdate();
+                        System.out.println("Actualización exitosa de ciudad.");
+                    } catch (SQLException e) {
+                        System.out.println("Error de actualización de ciudad: " + e.getMessage());
+                    }
                     break;
+
                 case 7:
                     System.out.print("Ingrese la nueva contraseña: ");
                     String contrasena = scanner.nextLine();
                     
+                    String query7 = "UPDATE users SET password = ? WHERE id = ?"; 
+                    // Elimina la coma y corrige "UPDATE FROM"
+                    try (PreparedStatement stmtUser = db.executeChange(query7)) {
+                        stmtUser.setString(1, contrasena);
+                        stmtUser.setInt(2, id);
+                        stmtUser.executeUpdate();
+                        System.out.println("Actualización exitosa de la contrasena.");
+                    } catch (SQLException e) {
+                        System.out.println("Error de actualización de la contrasena: " + e.getMessage());
+                    }
+
+
                     break;
+
                 case 8:
                     bandera = false;
                     break;
@@ -201,6 +269,6 @@ public class userControls {
     }
 
     public static void main(String[] args) {
-        userControls.updateUser(11);
+        userControls.readUsers();
     }
 } 

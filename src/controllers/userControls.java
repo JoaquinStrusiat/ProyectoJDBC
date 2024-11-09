@@ -120,7 +120,8 @@ public class userControls {
         ConectionDB db = new ConectionDB();
         boolean bandera = true;
         while (bandera) {
-            System.out.println("Seleccione el dato que desea actualizar:");
+            
+            System.out.println("\nSeleccione el dato que desea actualizar:");
             System.out.println("1 - Nombre");
             System.out.println("2 - Apellido");
             System.out.println("3 - DNI");
@@ -152,8 +153,9 @@ public class userControls {
                     try (PreparedStatement stmtUser = db.executeChange(query)) {
                         stmtUser.setString(1, nombre);
                         stmtUser.setInt(2, id);
-                        stmtUser.executeUpdate();
-                        System.out.println("Actualización exitosa de nombre.");
+                        int row = stmtUser.executeUpdate();
+                        if (row > 0 ){
+                            System.out.println("------Actualización exitosa------");}
                     } catch (SQLException e) {
                         System.out.println("Error de actualización: " + e.getMessage());
                     }
@@ -166,8 +168,9 @@ public class userControls {
                     try (PreparedStatement stmtUser = db.executeChange(query2)){ 
                         stmtUser.setString(1, apellido);
                         stmtUser.setInt(2, id);
-                        stmtUser.executeUpdate();
-                        System.out.println("Actualización exitosa de Apellido.");
+                        int row = stmtUser.executeUpdate();
+                        if (row > 0 ){
+                            System.out.println("------Actualización exitosa------");}
                         
                     } catch (Exception e) {
                         System.out.println("Error de actualización: " + e.getMessage());
@@ -182,8 +185,9 @@ public class userControls {
                     try (PreparedStatement stmtUser = db.executeChange(query3)){ 
                         stmtUser.setInt(1, dni);
                         stmtUser.setInt(2, id);
-                        stmtUser.executeUpdate();
-                        System.out.println("Actualización exitosa de dni.");
+                        int row = stmtUser.executeUpdate();
+                        if (row > 0 ){
+                            System.out.println("------Actualización exitosa------");}
                         
                     } catch (Exception e) {
                         System.out.println("Error de actualización en dni: " + e.getMessage());
@@ -199,8 +203,9 @@ public class userControls {
                     try (PreparedStatement stmtUser = db.executeChange(query4)) {
                         stmtUser.setString(1, email);
                         stmtUser.setInt(2, id);
-                        stmtUser.executeUpdate();
-                        System.out.println("Actualización exitosa de email.");
+                        int row = stmtUser.executeUpdate();
+                        if (row > 0 ){
+                            System.out.println("------Actualización exitosa------");}
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de email: " + e.getMessage());
                     }
@@ -215,8 +220,9 @@ public class userControls {
                     try (PreparedStatement stmtUser = db.executeChange(query5)) {
                         stmtUser.setString(1, country );
                         stmtUser.setInt(2, id);
-                        stmtUser.executeUpdate();
-                        System.out.println("Actualización exitosa de pais.");
+                        int row = stmtUser.executeUpdate();
+                        if (row > 0 ){
+                            System.out.println("------Actualización exitosa------");}
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de pais: " + e.getMessage());
                     }
@@ -232,8 +238,9 @@ public class userControls {
                     try (PreparedStatement stmtUser = db.executeChange(query6)) {
                         stmtUser.setString(1, city);
                         stmtUser.setInt(2, id);
-                        stmtUser.executeUpdate();
-                        System.out.println("Actualización exitosa de ciudad.");
+                        int row = stmtUser.executeUpdate();
+                        if (row > 0 ){
+                            System.out.println("------Actualización exitosa------");}
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de ciudad: " + e.getMessage());
                     }
@@ -248,8 +255,9 @@ public class userControls {
                     try (PreparedStatement stmtUser = db.executeChange(query7)) {
                         stmtUser.setString(1, contrasena);
                         stmtUser.setInt(2, id);
-                        stmtUser.executeUpdate();
-                        System.out.println("Actualización exitosa de la contrasena.");
+                        int row = stmtUser.executeUpdate();
+                        if (row > 0 ){
+                            System.out.println("------Actualización exitosa------");}
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de la contrasena: " + e.getMessage());
                     }
@@ -269,6 +277,6 @@ public class userControls {
     }
 
     public static void main(String[] args) {
-        userControls.readUsers();
+        userControls.updateUser(11);
     }
 } 

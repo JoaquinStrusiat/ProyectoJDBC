@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import conection.ConectionDB;
 import models.User;
+import utils.HashUtils;
 
 public class userControls {
     
@@ -128,6 +128,37 @@ public class userControls {
             db.closeConectionDB();
         }
     }
+
+    // 
+    //consulta a la base de datos para ver si dni y constraseña existen y coinciden
+    public boolean logIn(int dni, String password) {
+        String query = "SELECT password FROM users WHERE dni = ?";
+        
+        // Crear una instancia de la conexión a la base de datos
+        ConectionDB db = new ConectionDB();
+        
+        try (PreparedStatement statement = db.executeChange(query)) {
+            // Asignar los valores de DNI y contraseña a la consulta
+            statement.setInt(1, dni);
+            
+            // Ejecutar la consulta
+            ResultSet resultSet = statement.executeQuery();
+            String varr = resultSet.getString("password");
+            System.out.println(varr);
+            boolean verificacion = HashUtils.verifyPassword(password,varr);
+            
+            // Si se encuentra un registro que coincide, devolver true
+            return verificacion;
+        } catch (SQLException e) {
+            System.err.println("Error al verificar las credenciales: " + e.getMessage());
+        } finally {
+            // Cerrar la conexión a la base de datos
+            db.closeConectionDB();
+        }
+        
+        return false;
+    }
+        // 
 
     public static void main(String[] args) {
         userControls.createUser();

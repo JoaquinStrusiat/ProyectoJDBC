@@ -113,23 +113,17 @@ public class userControls {
     }
 
     public boolean logIn(int dni, String password) {
-        String query = "SELECT password FROM users WHERE dni = ?";
+        String query = "SELECT password FROM users WHERE dni = " + dni;
         
         // Crear una instancia de la conexión a la base de datos
         ConectionDB db = new ConectionDB();
         
-        try (PreparedStatement statement = db.executeChange(query)) {
-            // Asignar los valores de DNI y contraseña a la consulta
-            statement.setInt(1, dni);
-            
-            // Ejecutar la consulta
-            ResultSet resultSet = statement.executeQuery();
-            String varr = resultSet.getString("password");
-            System.out.println(varr);
-            boolean verificacion = HashUtils.verifyPassword(password,varr);
-            
-            // Si se encuentra un registro que coincide, devolver true
-            return verificacion;
+        try (ResultSet res = db.executeQuery(query)) {
+            while (res.next()) {
+                String varr = res.getString("password");
+                boolean verificacion = HashUtils.verifyPassword(password,varr);
+                return verificacion;
+            } 
         } catch (SQLException e) {
             System.err.println("Error al verificar las credenciales: " + e.getMessage());
         } finally {

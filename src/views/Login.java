@@ -15,13 +15,13 @@ public class Login {
             System.out.println("===== Bienvenido =====");
 
             // Si el usuario está logueado, mostrar opción de logout
-            if (isAuthenticated) {
-                System.out.println("4. Cerrar sesión");
-            }
-
             System.out.println("1. Iniciar sesión");
             System.out.println("2. Registrarse");
             System.out.println("3. Salir");
+            
+            if (isAuthenticated) {
+                System.out.println("4. Cerrar sesión");
+            }
             System.out.print("Seleccione una opción: ");
             int option = scanner.nextInt();
             scanner.nextLine(); // Consumir el salto de línea

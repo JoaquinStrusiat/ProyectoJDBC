@@ -3,12 +3,7 @@ import conection.ConectionDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-<<<<<<< HEAD
-import java.sql.Statement;
-import conection.ConectionDB;
-=======
 import java.util.Scanner;
->>>>>>> b795fc4e7ef9201991c13d4158cee8f80d8446d5
 import models.User;
 import utils.HashUtils;
 
@@ -117,9 +112,6 @@ public class userControls {
         }
     }
 
-<<<<<<< HEAD
-    // 
-    //consulta a la base de datos para ver si dni y constraseña existen y coinciden
     public boolean logIn(int dni, String password) {
         String query = "SELECT password FROM users WHERE dni = ?";
         
@@ -144,11 +136,9 @@ public class userControls {
             // Cerrar la conexión a la base de datos
             db.closeConectionDB();
         }
-        
         return false;
     }
-        // 
-=======
+
     public static void updateUser(int id){
         Scanner scanner = new Scanner(System.in);
         
@@ -311,7 +301,6 @@ public class userControls {
         }
         scanner.close();
     }
->>>>>>> b795fc4e7ef9201991c13d4158cee8f80d8446d5
 
     public static void main(String[] args) {
         userControls.createUser();

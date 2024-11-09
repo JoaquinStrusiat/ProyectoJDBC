@@ -224,9 +224,7 @@ public class userControls {
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de pais: " + e.getMessage());
                     }
-
                     break;
-                    
                 case 6:
                     System.out.print("Ingrese la nueva ciudad: ");
                     String city = scanner.nextLine();
@@ -243,7 +241,6 @@ public class userControls {
                         System.out.println("Error de actualización de ciudad: " + e.getMessage());
                     }
                     break;
-
                 case 7:
                     System.out.print("Ingrese la nueva contraseña: ");
                     String contrasena = scanner.nextLine();
@@ -259,10 +256,7 @@ public class userControls {
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de la contrasena: " + e.getMessage());
                     }
-
-
                     break;
-
                 case 8:
                     bandera = false;
                     break;

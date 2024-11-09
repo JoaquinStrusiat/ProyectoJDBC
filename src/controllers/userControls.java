@@ -3,8 +3,14 @@ import conection.ConectionDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+<<<<<<< HEAD
+import java.sql.Statement;
+import conection.ConectionDB;
+=======
 import java.util.Scanner;
+>>>>>>> b795fc4e7ef9201991c13d4158cee8f80d8446d5
 import models.User;
+import utils.HashUtils;
 
 public class userControls {
     
@@ -111,6 +117,38 @@ public class userControls {
         }
     }
 
+<<<<<<< HEAD
+    // 
+    //consulta a la base de datos para ver si dni y constraseña existen y coinciden
+    public boolean logIn(int dni, String password) {
+        String query = "SELECT password FROM users WHERE dni = ?";
+        
+        // Crear una instancia de la conexión a la base de datos
+        ConectionDB db = new ConectionDB();
+        
+        try (PreparedStatement statement = db.executeChange(query)) {
+            // Asignar los valores de DNI y contraseña a la consulta
+            statement.setInt(1, dni);
+            
+            // Ejecutar la consulta
+            ResultSet resultSet = statement.executeQuery();
+            String varr = resultSet.getString("password");
+            System.out.println(varr);
+            boolean verificacion = HashUtils.verifyPassword(password,varr);
+            
+            // Si se encuentra un registro que coincide, devolver true
+            return verificacion;
+        } catch (SQLException e) {
+            System.err.println("Error al verificar las credenciales: " + e.getMessage());
+        } finally {
+            // Cerrar la conexión a la base de datos
+            db.closeConectionDB();
+        }
+        
+        return false;
+    }
+        // 
+=======
     public static void updateUser(int id){
         Scanner scanner = new Scanner(System.in);
         
@@ -273,6 +311,7 @@ public class userControls {
         }
         scanner.close();
     }
+>>>>>>> b795fc4e7ef9201991c13d4158cee8f80d8446d5
 
     public static void main(String[] args) {
         userControls.createUser();

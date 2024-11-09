@@ -5,17 +5,18 @@ import java.util.Scanner;
 import controllers.productControls;
 
 public class Views {
-//falta login y menu de tablas
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int option = -1;
-
+        
+        //Menú CRUD después de la autenticación
         do {
             System.out.println("========= Menú de CRUD =========");
             System.out.println("1. Ver productos");
-            System.out.println("2. Modificar producto");
-            System.out.println("3. Eliminar producto");
-            System.out.println("4. Modificar producto");
+            System.out.println("2. Agregar producto");
+            System.out.println("3. Modificar producto");
+            System.out.println("4. Eliminar producto");
             System.out.println("5. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -23,9 +24,8 @@ public class Views {
                 option = scanner.nextInt();
                 scanner.nextLine(); 
 
-                // verifico que la opción esté en el rango de 1 a 5
                 if (option < 1 || option > 5) {
-                    System.out.println("Opción fuera de rango. Por favor, ingrese un número entre 1 y 4.");
+                    System.out.println("Opción fuera de rango. Por favor, ingrese un número entre 1 y 5.");
                     option = -1;
                 }
 
@@ -35,15 +35,15 @@ public class Views {
                         break;
 
                     case 2:
-                        productControls.modifyProduct();
+                        productControls.createProduct(null);
                         break;
 
                     case 3:
-                        productControls.deleteProduct();
+                        productControls.modifyProduct();
                         break;
 
                     case 4:
-                        productControls.modifyProduct();
+                        productControls.deleteProduct();
                         break;
                     case 5:
                         System.out.println("Saliendo del programa...");
@@ -52,7 +52,7 @@ public class Views {
                     default:
                         break;
                 }
-                
+
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, ingrese un número.");
                 scanner.nextLine(); 

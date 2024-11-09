@@ -61,7 +61,7 @@ public class ConectionDB {
 
     public PreparedStatement executeChange(String query) {
         try {
-            prepareStatement = connection.prepareStatement(query);
+            prepareStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException e) {
             System.out.println("Error de consulta: " + e);
         }

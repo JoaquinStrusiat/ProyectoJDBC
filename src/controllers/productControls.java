@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 import conection.ConectionDB;
 import models.Product;
-import models.User;
 
 public class productControls {
 
@@ -16,34 +15,21 @@ public class productControls {
     // METODO CREATE (POST)
 
     // Método para agregar (Add) un nuevo producto
-    public static void createProduct(User user) {
+    public static void createProduct(int idUser) {
         Product newProduct = Product.createProduct();
-        int dni = user.getDni();
         //// Consulta SQL para insertar el usuario
-        String query = "INSERT INTO products (name, description, price, category, id) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO products (name, description, price, category, id_user) VALUES (?, ?, ?, ?, ?)";
 
         // Crear una instancia de la conexión
         ConectionDB db = new ConectionDB();
 
         // Ejecutar la inserción usando PreparedStatement
-        try (
-            //obtenemos el id del usuario
-            ResultSet res = db.executeQuery("SELECT id FROM railway.users WHERE dni = " + dni);
-            PreparedStatement stmt = db.executeChange(query);
-            ) {
+        try (PreparedStatement stmt = db.executeChange(query);) {
             stmt.setString(1, newProduct.getnameProduct());
             stmt.setString(2, newProduct.getDescription());
             stmt.setDouble(3, newProduct.getPrice());
-            //printeo las categorias con un -- categoryControls.readCategories()
-            // switch crean las dos primeras variables... 
-                //1- selecionar un id categoria existente
-                //stmt.setInt(4, id_category);
-                //2- crear una categoría nueva -- String nameCategor = categoriesControls.createCategory()
-                // Agregarla a la base de datos --  int id_category = categoriesControls.getId(nameCategor)
-                //stmt.setInt(4, id_category);
-            stmt.setInt(5, res.getInt("id"));
-
-
+            stmt.setInt(4, newProduct.getCategory());
+            stmt.setInt(5, idUser);
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("¡Producto agregado exitosamente!");
@@ -57,24 +43,28 @@ public class productControls {
 
     // Método READ (todos los productos)
     public static void readProducts() {
-        String query = "SELECT * FROM products";
+        String query = "SELECT * FROM product_details";
         ConectionDB db = new ConectionDB();
-
-        System.out.printf("%-4s %-15s %-17s %-40s ", "Id", "Nombre", "Precio", "Descripcion");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-4s %-25s %-15s %-20s %-20s %-40s ", "Id", "| Nombre del Producto", "| Categoria", "| Precio unitario", "| Vendedor",  "| Descripcion");
         System.out.println("");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
                 int productID = resultSet.getInt("id");
                 String name = resultSet.getString("name");
-                String description = resultSet.getString("description");
+                String category_name = resultSet.getString("category_name");
                 double price = resultSet.getDouble("price");
+                String user_name = resultSet.getString("user_name");
+                String description = resultSet.getString("description");
                 //String category = resultSet.getString("category")
-                String output = String.format("%-4s %-15s $ %-15s %-40s", productID, name, price, description);
+                String output = String.format("%-4s | %-23s | %-13s | $ %-16s | %-18s | %-38s", productID, name, category_name, price, user_name, description);
                 System.out.println(output);
             }
         } catch (Exception e) {
             System.err.println("Error al leer los productos: " + e.getMessage());
         }
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
         db.closeConectionDB();
     }
     

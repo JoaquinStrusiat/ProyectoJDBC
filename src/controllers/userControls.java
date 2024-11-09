@@ -275,6 +275,6 @@ public class userControls {
     }
 
     public static void main(String[] args) {
-        userControls.updateUser(11);
+        userControls.createUser();
     }
 } 

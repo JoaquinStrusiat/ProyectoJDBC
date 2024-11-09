@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import models.User;
-import utils.HashUtils;
 
 public class userControls {
     
@@ -110,27 +109,6 @@ public class userControls {
         } finally {
             db.closeConectionDB();
         }
-    }
-
-    public boolean logIn(int dni, String password) {
-        String query = "SELECT password FROM users WHERE dni = " + dni;
-        
-        // Crear una instancia de la conexión a la base de datos
-        ConectionDB db = new ConectionDB();
-        
-        try (ResultSet res = db.executeQuery(query)) {
-            while (res.next()) {
-                String passStorage = res.getString("password");
-                boolean verificacion = HashUtils.verifyPassword(password, passStorage);
-                return verificacion;
-            } 
-        } catch (SQLException e) {
-            System.err.println("Error al verificar las credenciales: " + e.getMessage());
-        } finally {
-            // Cerrar la conexión a la base de datos
-            db.closeConectionDB();
-        }
-        return false;
     }
 
     public static void updateUser(int id){

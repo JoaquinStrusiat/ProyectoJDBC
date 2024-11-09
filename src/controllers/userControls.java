@@ -153,7 +153,8 @@ public class userControls {
                         stmtUser.setInt(2, id);
                         int row = stmtUser.executeUpdate();
                         if (row > 0 ){
-                            System.out.println("------Actualización exitosa------");}
+                            System.out.println("------Actualización exitosa------");
+                        }
                     } catch (SQLException e) {
                         System.out.println("Error de actualización: " + e.getMessage());
                     }
@@ -168,13 +169,13 @@ public class userControls {
                         stmtUser.setInt(2, id);
                         int row = stmtUser.executeUpdate();
                         if (row > 0 ){
-                            System.out.println("------Actualización exitosa------");}
-                        
+                            System.out.println("------Actualización exitosa------");
+                        }
                     } catch (Exception e) {
                         System.out.println("Error de actualización: " + e.getMessage());
                     }
-
                     break;
+
                 case 3:
                     System.out.print("Ingrese el nuevo DNI: ");
                     int dni = scanner.nextInt();
@@ -185,14 +186,13 @@ public class userControls {
                         stmtUser.setInt(2, id);
                         int row = stmtUser.executeUpdate();
                         if (row > 0 ){
-                            System.out.println("------Actualización exitosa------");}
-                        
+                            System.out.println("------Actualización exitosa------");
+                        }   
                     } catch (Exception e) {
                         System.out.println("Error de actualización en dni: " + e.getMessage());
                     }
-
-                    
                     break;
+
                 case 4:
                     System.out.print("Ingrese el nuevo email: ");
                     String email = scanner.nextLine();
@@ -203,7 +203,8 @@ public class userControls {
                         stmtUser.setInt(2, id);
                         int row = stmtUser.executeUpdate();
                         if (row > 0 ){
-                            System.out.println("------Actualización exitosa------");}
+                            System.out.println("------Actualización exitosa------");
+                        }
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de email: " + e.getMessage());
                     }
@@ -212,7 +213,6 @@ public class userControls {
                 case 5:
                     System.out.print("Ingrese el nuevo país: ");
                     String country = scanner.nextLine();
-                    
                     String query5 = "UPDATE users SET country = ? WHERE id = ?"; 
                     // Elimina la coma y corrige "UPDATE FROM"
                     try (PreparedStatement stmtUser = db.executeChange(query5)) {
@@ -220,11 +220,13 @@ public class userControls {
                         stmtUser.setInt(2, id);
                         int row = stmtUser.executeUpdate();
                         if (row > 0 ){
-                            System.out.println("------Actualización exitosa------");}
+                            System.out.println("------Actualización exitosa------");
+                        }
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de pais: " + e.getMessage());
                     }
                     break;
+
                 case 6:
                     System.out.print("Ingrese la nueva ciudad: ");
                     String city = scanner.nextLine();
@@ -236,11 +238,13 @@ public class userControls {
                         stmtUser.setInt(2, id);
                         int row = stmtUser.executeUpdate();
                         if (row > 0 ){
-                            System.out.println("------Actualización exitosa------");}
+                            System.out.println("------Actualización exitosa------");
+                        }
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de ciudad: " + e.getMessage());
                     }
                     break;
+
                 case 7:
                     System.out.print("Ingrese la nueva contraseña: ");
                     String contrasena = scanner.nextLine();
@@ -252,11 +256,13 @@ public class userControls {
                         stmtUser.setInt(2, id);
                         int row = stmtUser.executeUpdate();
                         if (row > 0 ){
-                            System.out.println("------Actualización exitosa------");}
+                            System.out.println("------Actualización exitosa------");
+                        }
                     } catch (SQLException e) {
                         System.out.println("Error de actualización de la contrasena: " + e.getMessage());
                     }
                     break;
+                    
                 case 8:
                     bandera = false;
                     break;

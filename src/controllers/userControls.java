@@ -120,8 +120,8 @@ public class userControls {
         
         try (ResultSet res = db.executeQuery(query)) {
             while (res.next()) {
-                String varr = res.getString("password");
-                boolean verificacion = HashUtils.verifyPassword(password,varr);
+                String passStorage = res.getString("password");
+                boolean verificacion = HashUtils.verifyPassword(password, passStorage);
                 return verificacion;
             } 
         } catch (SQLException e) {

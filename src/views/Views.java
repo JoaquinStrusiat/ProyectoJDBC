@@ -67,6 +67,6 @@ public class Views {
             }
 
             System.out.println();
-        } while (option != 5);
+        } while (option != 5 && option != 8);
     }
 }

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 import models.User;
+import utils.HashUtils;
 
 public class userControls {
     
@@ -116,7 +117,6 @@ public class userControls {
         Scanner scanner = new Scanner(System.in);
         
         ConectionDB db = new ConectionDB();
-        boolean bandera = true;
         System.out.println("\nSeleccione el dato que desea actualizar:");
         System.out.println("1 - Nombre");
         System.out.println("2 - Apellido");
@@ -126,7 +126,7 @@ public class userControls {
         System.out.println("6 - Ciudad");
         System.out.println("7 - Contraseña");
         System.out.println("8 - Salir");
-        
+        boolean bandera = true;
         while (bandera) {
             int option;
             while (true) {
@@ -246,12 +246,12 @@ public class userControls {
 
                 case 7:
                     System.out.print("Ingrese la nueva contraseña: ");
-                    String contrasena = scanner.nextLine();
-                    
+                    String passwoString = scanner.nextLine();
+                    String passHashed = HashUtils.hashPassword(passwoString);                    
                     String query7 = "UPDATE users SET password = ? WHERE id = ?"; 
                     // Elimina la coma y corrige "UPDATE FROM"
                     try (PreparedStatement stmtUser = db.executeChange(query7)) {
-                        stmtUser.setString(1, contrasena);
+                        stmtUser.setString(1, passHashed);
                         stmtUser.setInt(2, id);
                         int row = stmtUser.executeUpdate();
                         if (row > 0 ){

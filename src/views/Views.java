@@ -1,9 +1,10 @@
 package views;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import controllers.historyControls;
 import controllers.productControls;
 import controllers.userControls;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class Views {
 
@@ -22,6 +23,8 @@ public class Views {
             System.out.println("4. Eliminar producto");
             System.out.println("5. Actualizar mis Datos");
             System.out.println("6. Cerrar Sesion");
+            System.out.println("7. Ver historial de compras");
+            System.out.println("8. Registrar compra");
             System.out.print("Seleccione una opción: ");
 
             try {
@@ -49,6 +52,12 @@ public class Views {
                         break;
                     default:
                         System.out.println("---Opción fuera de rango---");
+                        break;
+                    case 7:
+                        historyControls.readHistory();
+                        break;
+                    case 8:
+                        historyControls.createHistory();
                         break;
                 }
 

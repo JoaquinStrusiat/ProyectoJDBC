@@ -66,13 +66,14 @@ public class productControls {
     }
 
     // Método READ productos del usuario
-    public static void readProductsUser(int idUser) {
+    public static boolean readProductsUser(int idUser) {
         String query = "SELECT * FROM product_details WHERE user_name = (SELECT name FROM users WHERE id = " + idUser + ")" ;
         ConectionDB db = new ConectionDB();
         System.out.println("----------------------------------------------------------------------------------------------------------------------------");
         System.out.printf("%-4s %-25s %-15s %-20s %-20s %-40s ", "Id", "| Nombre del Producto", "| Categoria", "| Precio unitario", "| Vendedor",  "| Descripcion");
         System.out.println("");
         System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        boolean data = false;
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
                 int productID = resultSet.getInt("id");
@@ -81,51 +82,75 @@ public class productControls {
                 double price = resultSet.getDouble("price");
                 String user_name = resultSet.getString("user_name");
                 String description = resultSet.getString("description");
-                //String category = resultSet.getString("category")
+    
                 String output = String.format("%-4s | %-23s | %-13s | $ %-16s | %-18s | %-38s", productID, name, category_name, price, user_name, description);
                 System.out.println(output);
+                data = true;
+            }
+            if (!data) {
+                System.out.println("------------------------------------------------ LISTA VACIA ---------------------------------------------------------------");
             }
         } catch (Exception e) {
             System.err.println("Error al leer los productos: " + e.getMessage());
+        } finally {
+            System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+            db.closeConectionDB();   
         }
-        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
-        db.closeConectionDB();
+       return data;
     }
     
     // Método para eliminar productos segun el usuario
     public static void deleteProduct(int idUser) {
-        // Crear un objeto Scanner para leer el DNI desde el teclado
+        @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
 
-        // Pedir el nombre del producto a eliminar
-        System.out.print("Ingrese el nombre del producto que desea eliminar: ");
-        String name = scanner.nextLine();
-
-        // Consulta SQL para eliminar el producto por nombre
-        String query = "DELETE FROM products WHERE name = ?";
-
-        // Crear una instancia de la conexión
-        ConectionDB db = new ConectionDB();
-
-        // Ejecutar la eliminación usando PreparedStatement
-        try (PreparedStatement stmt = db.executeChange(query)) {
-            
-            // Asignar el valor del parámetro
-            stmt.setString(1, name);
-
-            // Ejecutar la eliminación
-            int rowsDeleted = stmt.executeUpdate();
-            if (rowsDeleted > 0) {
-                System.out.println("¡Producto eliminado exitosamente!");
-            } else {
-                System.out.println("Producto no encontrado.");
+        if (productControls.readProductsUser(idUser)) {
+            System.out.println("1 - Eliminar un producto");
+            System.out.println("2 - Salir");
+            boolean ban = true;
+            while (ban) {
+                System.out.print("Opcion: ");
+                String op = scanner.nextLine();
+                switch (op) {
+                    case "1":
+                        int idProduct;
+                        while (true) {
+                            System.out.print("Ingrese el id del producto a eliminar: ");
+                            try {
+                                idProduct = scanner.nextInt();  
+                                scanner.nextLine();     
+                                break;
+                            } catch (Exception e) {
+                                System.out.println("---Opcion no válida---");
+                                scanner.nextLine();
+                            }
+                        }
+                        String query = "DELETE FROM products WHERE id = ? AND id_user = ?";
+                        ConectionDB db = new ConectionDB();
+                        try (PreparedStatement stmt = db.executeChange(query)) {
+                            stmt.setInt(1, idProduct);
+                            stmt.setInt(2, idUser);
+                            int rowsDeleted = stmt.executeUpdate();
+                            if (rowsDeleted > 0) {
+                                System.out.println("---¡Producto eliminado exitosamente!---");
+                            } else {
+                                System.out.println("---Producto no encontrado---");
+                            }
+                        } catch (SQLException e) {
+                            System.err.println("Error al eliminar el producto: " + e.getMessage());
+                        } finally {
+                            db.closeConectionDB();
+                        }
+                        break;
+                    case "2":
+                        ban = false;
+                        break;
+                    default:
+                        System.out.println("---Opcion no válida---");
+                        break;
+                }
             }
-        } catch (SQLException e) {
-            System.err.println("Error al eliminar el producto: " + e.getMessage());
-        } finally {
-            db.closeConectionDB();
         }
-        scanner.close();
     }
 
     // Método para modificar (Modify) un producto por nombre

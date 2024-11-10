@@ -39,7 +39,7 @@ public class Views {
                         productControls.createProduct(userID);
                         break;
                     case 3:
-                        productControls.modifyProduct();
+                        productControls.updateProduct();
                         break;
                     case 4:
                         productControls.deleteProduct(userID);

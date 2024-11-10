@@ -83,9 +83,6 @@ public class ShopingHistory{
                         double total_price = resultSet.getDouble("total_price");
                         Date Date = resultSet.getDate("date");
                         
-                        
-  
-
                     }
                     // elegir cantidad ,calcular precio y descontar de la bd y mostar todo 
                     if (res = next()){

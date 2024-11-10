@@ -209,7 +209,7 @@ private static String buildUpdateQuery(int option) {
     
     public static void main(String[] args) {
         //createHistory();
-        //readHistory();
+        readHistory();
         //validHistory();
         //updateHistory();
         //deleteHistory(1);   

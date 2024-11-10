@@ -40,7 +40,7 @@ public class productControls {
 
     // Método READ (todos los productos)
     public static void readProducts() {
-        String query = "SELECT * FROM product_details";
+            
         ConectionDB db = new ConectionDB();
         System.out.println("----------------------------------------------------------------------------------------------------------------------------");
         System.out.printf("%-4s %-25s %-15s %-20s %-20s %-40s ", "Id", "| Nombre del Producto", "| Categoria", "| Precio unitario", "| Vendedor",  "| Descripcion");

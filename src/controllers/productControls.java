@@ -11,11 +11,8 @@ import models.Product;
 public class productControls {
 
     // Declaramos los metodos del CRUD 
-
-    // METODO CREATE (POST)
-
-    // Método para agregar (Add) un nuevo producto
     public static void createProduct(int idUser) {
+        System.out.println("\nCreacion un Producto: ");
         Product newProduct = Product.createProduct();
         //// Consulta SQL para insertar el usuario
         String query = "INSERT INTO products (name, description, price, category, id_user) VALUES (?, ?, ?, ?, ?)";
@@ -32,7 +29,7 @@ public class productControls {
             stmt.setInt(5, idUser);
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
-                System.out.println("¡Producto agregado exitosamente!");
+                System.out.println("---¡Producto agregado exitosamente!---");
             }
         } catch (SQLException e) {
             System.err.println("Error al insertar el producto: " + e.getMessage());
@@ -104,51 +101,46 @@ public class productControls {
         scanner.close();
     }
 
-   
-    
-    
-// Método para modificar (Modify) un producto por nombre
-public static void modifyProduct() {
-    Scanner scanner = new Scanner(System.in);
+    // Método para modificar (Modify) un producto por nombre
+    public static void modifyProduct() {
+        @SuppressWarnings("resource")
+        Scanner scanner = new Scanner(System.in);
 
-    System.out.print("Ingrese el nombre actual del producto que desea modificar: ");
-    String currentName = scanner.nextLine();
+        System.out.print("Ingrese el nombre actual del producto que desea modificar: ");
+        String currentName = scanner.nextLine();
 
-    System.out.print("Ingrese el nuevo nombre del producto: ");
-    String newName = scanner.nextLine();
+        System.out.print("Ingrese el nuevo nombre del producto: ");
+        String newName = scanner.nextLine();
 
-    System.out.print("Ingrese la nueva descripción del producto: ");
-    String newDescription = scanner.nextLine();
+        System.out.print("Ingrese la nueva descripción del producto: ");
+        String newDescription = scanner.nextLine();
 
-    System.out.print("Ingrese el nuevo precio del producto: ");
-    double newPrice = scanner.nextDouble();
+        System.out.print("Ingrese el nuevo precio del producto: ");
+        double newPrice = scanner.nextDouble();
 
-    // Consulta SQL para actualizar el producto por nombre
-    String query = "UPDATE products SET name = ?, description = ?, price = ? WHERE name = ?";
-    ConectionDB db = new ConectionDB();
+        // Consulta SQL para actualizar el producto por nombre
+        String query = "UPDATE products SET name = ?, description = ?, price = ? WHERE name = ?";
+        ConectionDB db = new ConectionDB();
 
-    // Ejecutar la actualización usando PreparedStatement
-    try (PreparedStatement stmt = db.executeChange(query)) {
-        stmt.setString(1, newName);
-        stmt.setString(2, newDescription);
-        stmt.setDouble(3, newPrice);
-        stmt.setString(4, currentName);
+        // Ejecutar la actualización usando PreparedStatement
+        try (PreparedStatement stmt = db.executeChange(query)) {
+            stmt.setString(1, newName);
+            stmt.setString(2, newDescription);
+            stmt.setDouble(3, newPrice);
+            stmt.setString(4, currentName);
 
-        // Ejecutar la actualización
-        int rowsUpdated = stmt.executeUpdate();
-        if (rowsUpdated > 0) {
-            System.out.println("¡Producto actualizado exitosamente!");
-        } else {
-            System.out.println("Producto no encontrado.");
+            // Ejecutar la actualización
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("¡Producto actualizado exitosamente!");
+            } else {
+                System.out.println("Producto no encontrado.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar el producto: " + e.getMessage());
+        } finally {
+            db.closeConectionDB();
         }
-    } catch (SQLException e) {
-        System.err.println("Error al actualizar el producto: " + e.getMessage());
-    } finally {
-        db.closeConectionDB();
-    }
-    scanner.close();
-}
-    public static void main(String[] args) {
-        productControls.readProducts();
+        
     }
 }

@@ -112,23 +112,22 @@ public class userControls {
     }
 
     public static void updateUser(int id){
+        @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
-        
         
         ConectionDB db = new ConectionDB();
         boolean bandera = true;
+        System.out.println("\nSeleccione el dato que desea actualizar:");
+        System.out.println("1 - Nombre");
+        System.out.println("2 - Apellido");
+        System.out.println("3 - DNI");
+        System.out.println("4 - Email");
+        System.out.println("5 - País");
+        System.out.println("6 - Ciudad");
+        System.out.println("7 - Contraseña");
+        System.out.println("8 - Salir");
+        
         while (bandera) {
-            
-            System.out.println("\nSeleccione el dato que desea actualizar:");
-            System.out.println("1 - Nombre");
-            System.out.println("2 - Apellido");
-            System.out.println("3 - DNI");
-            System.out.println("4 - Email");
-            System.out.println("5 - País");
-            System.out.println("6 - Ciudad");
-            System.out.println("7 - Contraseña");
-            System.out.println("8 - Salir");
-
             int option;
             while (true) {
                 System.out.print("Ingrese una opción: ");
@@ -136,7 +135,7 @@ public class userControls {
                     option = scanner.nextInt();
                     break; // Sale del bucle si la entrada es numérica
                 } catch (Exception e) {
-                    System.out.println("Ingrese un valor numérico [1 - 8]");
+                    System.out.println("---Opcion no válida---");
                     scanner.nextLine(); // Limpia el buffer del scanner
                 }
             }
@@ -267,14 +266,9 @@ public class userControls {
                     bandera = false;
                     break;
                 default:
-                    System.out.println("Opción no válida. Intente nuevamente.");
+                    System.out.println("---Opción fuera de rango---");
                     break;
             }
         }
-        scanner.close();
-    }
-
-    public static void main(String[] args) {
-        userControls.createUser();
     }
 } 

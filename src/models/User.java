@@ -25,11 +25,11 @@ public class User {
     }
 
     public static User createUser(){
+        @SuppressWarnings("resource")
+        Scanner scanner = new Scanner(System.in);
         User user;
         while (true) {
-            try {
-                // Crear un objeto Scanner para leer datos desde el teclado
-                Scanner scanner = new Scanner(System.in);
+            try {   
                 // Pedir datos al usuario
                 System.out.print("Ingrese el nombre: ");
                 String name = scanner.nextLine();
@@ -65,7 +65,6 @@ public class User {
                         System.out.println("No coinciden, ingrese nuevamente una contraseña:\n");
                     }
                 }
-                scanner.close();
                 user = new User(name, last_name, email, country, city, dni, password);
                 break;
             } catch (Exception e) {

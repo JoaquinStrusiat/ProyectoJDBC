@@ -64,9 +64,36 @@ public class productControls {
         System.out.println("----------------------------------------------------------------------------------------------------------------------------");
         db.closeConectionDB();
     }
+
+    // Método READ productos del usuario
+    public static void readProductsUser(int idUser) {
+        String query = "SELECT * FROM product_details WHERE user_name = (SELECT name FROM users WHERE id = " + idUser + ")" ;
+        ConectionDB db = new ConectionDB();
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-4s %-25s %-15s %-20s %-20s %-40s ", "Id", "| Nombre del Producto", "| Categoria", "| Precio unitario", "| Vendedor",  "| Descripcion");
+        System.out.println("");
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        try (ResultSet resultSet = db.executeQuery(query)) {
+            while (resultSet.next()) {
+                int productID = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String category_name = resultSet.getString("category_name");
+                double price = resultSet.getDouble("price");
+                String user_name = resultSet.getString("user_name");
+                String description = resultSet.getString("description");
+                //String category = resultSet.getString("category")
+                String output = String.format("%-4s | %-23s | %-13s | $ %-16s | %-18s | %-38s", productID, name, category_name, price, user_name, description);
+                System.out.println(output);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al leer los productos: " + e.getMessage());
+        }
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------");
+        db.closeConectionDB();
+    }
     
-    // Método para eliminar (Delete) un producto por NOMBRE
-    public static void deleteProduct() {
+    // Método para eliminar productos segun el usuario
+    public static void deleteProduct(int idUser) {
         // Crear un objeto Scanner para leer el DNI desde el teclado
         Scanner scanner = new Scanner(System.in);
 
@@ -142,5 +169,23 @@ public class productControls {
             db.closeConectionDB();
         }
         
+    }
+
+    public static boolean validProduct(int id) {
+        String query = "SELECT 1 FROM products WHERE id = ?";
+        ConectionDB db = new ConectionDB();
+        boolean exists = false;
+    
+        try (PreparedStatement stmt = db.executeChange(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                exists = resultSet.next(); // Será true si hay al menos un registro
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al verificar si la categoría existe: " + e.getMessage());
+        } finally {
+            db.closeConectionDB();
+        }
+        return exists;
     }
 }

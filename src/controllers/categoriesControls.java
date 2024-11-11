@@ -81,10 +81,5 @@ public class categoriesControls {
         }
         return exists;
     }
-
-    public static void main(String[] args) {
-
-        readCategories();   
-    }
 }
   

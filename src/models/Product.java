@@ -94,10 +94,6 @@ public class Product {
     public int getCategory() {
         return category;
     }
-
-    public static void main(String[] args) {
-        
-    }
 }
 
  

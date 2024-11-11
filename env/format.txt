@@ -1,0 +1,11 @@
+- Crear carpetas para modularizar las variables de entorno y guardar urls, usuarios y contraseñas.
+- Se debe almacenar en un .env solo lo que se encuentra entre guiones cambiando los valores de cada variable
+
+--------------------------------------------
+dbUrl = jdbc:mysql://direccionip/basededatos  
+dbUsername = usuario 
+dbPassword = contraseña
+--------------------------------------------
+
+
+

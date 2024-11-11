@@ -1,7 +1,6 @@
 package views;
-
-import controllers.historyControls;
 import controllers.productControls;
+import controllers.shoppingControls;
 import controllers.userControls;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -39,7 +38,7 @@ public class Views {
                         productControls.createProduct(userID);
                         break;
                     case 3:
-                        productControls.updateProduct();
+                        productControls.updateProduct(userID);
                         break;
                     case 4:
                         productControls.deleteProduct(userID);
@@ -48,10 +47,10 @@ public class Views {
                         userControls.updateUser(userID);
                         break;
                     case 6:
-                        historyControls.createHistory();
+                        shoppingControls.createShop(userID);
                         break;
                     case 7:
-                        historyControls.readHistory();
+                        shoppingControls.readShopHistory(userID);
                         break;
                     case 8:
                         System.out.println("Saliendo del programa...");
@@ -67,6 +66,6 @@ public class Views {
             }
 
             System.out.println();
-        } while (option != 5 && option != 8);
+        } while (option != 8);
     }
 }

@@ -39,7 +39,4 @@ public class Login {
         }
         scanner.close();
     }
-    public static void main(String[] args) {
-        start();
-    }
 }

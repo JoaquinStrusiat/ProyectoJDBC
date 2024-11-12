@@ -48,8 +48,10 @@ public class userControls {
         //Inicializo una conección con la ruta de variables a implementar
         ConectionDB db = new ConectionDB();
         //Head de la tabla
-        System.out.printf("%-3s %-20s %-15s %-15s %-20s %-30s %-20s", "ID","Nombre", "Apellido", "DNI", "Pais", "Ciudad","Email");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-4s | %-20s | %-15s | %-15s | %-15s | %-20s | %-20s", "ID","Nombre", "Apellido", "DNI", "Pais", "Ciudad","Email");
         System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
         //Manejo de la respuesta
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
@@ -60,9 +62,42 @@ public class userControls {
                 String country = resultSet.getString("country");
                 String city = resultSet.getString("city");
                 String email = resultSet.getString("email");
-                String output = String.format("%-3s %-20s %-15s %-15s %-20s %-30s %-20s", id, name, lastName, dni, country, city ,email);
+                String output = String.format("%-4s | %-20s | %-15s | %-15s | %-15s | %-20s | %-20s", id, name, lastName, dni, country, city ,email);
                 System.out.println(output);
             }
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        db.closeConectionDB();
+    }
+    //Metodo Read user by Id
+    public static void readUserbyId(int idUser){
+        //Declaro la query
+        String query = "SELECT * FROM users WHERE id = " + idUser;
+        //Inicializo una conección con la ruta de variables a implementar
+        ConectionDB db = new ConectionDB();
+        //Head de la tabla
+        System.out.println("\n------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-4s | %-20s | %-15s | %-15s | %-15s | %-20s | %-20s", "ID","Nombre", "Apellido", "DNI", "Pais", "Ciudad","Email");
+        System.out.println("");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
+        //Manejo de la respuesta
+        try (ResultSet resultSet = db.executeQuery(query)) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String lastName = resultSet.getString("last_name");
+                String dni = resultSet.getString("dni");
+                String country = resultSet.getString("country");
+                String city = resultSet.getString("city");
+                String email = resultSet.getString("email");
+                String output = String.format("%-4s | %-20s | %-15s | %-15s | %-15s | %-20s | %-20s", id, name, lastName, dni, country, city ,email);
+                System.out.println(output);
+            }
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------");
+
         } catch (Exception e) {
             System.err.println(e);
         }
@@ -117,17 +152,19 @@ public class userControls {
         Scanner scanner = new Scanner(System.in);
         
         ConectionDB db = new ConectionDB();
-        System.out.println("\nSeleccione el dato que desea actualizar:");
-        System.out.println("1 - Nombre");
-        System.out.println("2 - Apellido");
-        System.out.println("3 - DNI");
-        System.out.println("4 - Email");
-        System.out.println("5 - País");
-        System.out.println("6 - Ciudad");
-        System.out.println("7 - Contraseña");
-        System.out.println("8 - Salir");
+        
         boolean bandera = true;
         while (bandera) {
+            userControls.readUserbyId(id);
+            System.out.println("Seleccione el dato que desea actualizar:");
+            System.out.println("1 - Nombre");
+            System.out.println("2 - Apellido");
+            System.out.println("3 - DNI");
+            System.out.println("4 - Email");
+            System.out.println("5 - País");
+            System.out.println("6 - Ciudad");
+            System.out.println("7 - Contraseña");
+            System.out.println("8 - Salir");
             int option;
             while (true) {
                 System.out.print("Ingrese una opción: ");
@@ -270,5 +307,9 @@ public class userControls {
                     break;
             }
         }
+    }
+    public static void main(String[] args) {
+        readUsers();
+        readUserbyId(15);
     }
 } 

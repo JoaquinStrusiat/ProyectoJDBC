@@ -30,7 +30,7 @@ public class Login {
                 case "3":
                     // Salir del programa
                     exit = true;
-                    System.out.println("Gracias por usar el sistema. ¡Hasta luego!");
+                    System.out.println("\n==== ¡Hasta luego! ====\n");
                     break;
                 default:
                     System.out.println("---Opcion no válida---");

@@ -37,10 +37,10 @@ public class productControls {
     // Método READ (todos los productos)
     public static void readProducts() {     
         ConectionDB db = new ConectionDB();
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-4s %-25s %-23s %-20s %-20s %-40s ", "Id", "| Nombre del Producto", "| Categoria", "| Precio unitario", "| Vendedor",  "| Descripcion");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-4s %-35s %-25s %-20s %-20s %-40s", "Id", "| Nombre del Producto", "| Categoria", "| Precio unitario", "| Vendedor",  "| Descripcion");
         System.out.println("");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
         String query = "SELECT * FROM product_details";
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
@@ -51,13 +51,13 @@ public class productControls {
                 String user_name = resultSet.getString("user_name");
                 String description = resultSet.getString("description");
                 //String category = resultSet.getString("category")
-                String output = String.format("%-4s | %-25s | %-23s | $ %-20s | %-20s | %-40s", productID, name, category_name, price, user_name, description);
+                String output = String.format("%-4s | %-33s | %-23s | $ %-16s | %-18s | %-38s", productID, name, category_name, price, user_name, description);
                 System.out.println(output);
             }
         } catch (Exception e) {
             System.err.println("Error al leer los productos: " + e.getMessage());
         }
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
         db.closeConectionDB();
     }
 
@@ -65,10 +65,10 @@ public class productControls {
     public static boolean readProductsUser(int idUser) {
         String query = "SELECT * FROM product_details WHERE user_name = (SELECT name FROM users WHERE id = " + idUser + ")" ;
         ConectionDB db = new ConectionDB();
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-4s %-25s %-23s %-20s %-20s %-40s ", "Id", "| Nombre del Producto", "| Categoria", "| Precio unitario", "| Vendedor",  "| Descripcion");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-4s %-35s %-25s %-20s %-20s %-40s", "Id", "| Nombre del Producto", "| Categoria", "| Precio unitario", "| Vendedor",  "| Descripcion");
         System.out.println("");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
         boolean data = false;
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
@@ -79,17 +79,17 @@ public class productControls {
                 String user_name = resultSet.getString("user_name");
                 String description = resultSet.getString("description");
     
-                String output = String.format("%-4s | %-25s | %-23s | $ %-20s | %-20s | %-40s", productID, name, category_name, price, user_name, description);
+                String output = String.format("%-4s | %-33s | %-23s | $ %-16s | %-18s | %-38s", productID, name, category_name, price, user_name, description);
                 System.out.println(output);
                 data = true;
             }
             if (!data) {
-                System.out.println("------------------------------------------------ LISTA VACIA ---------------------------------------------------------------");
+                System.out.println("------------------------------------------------------------------ LISTA VACIA ------------------------------------------------------------------");
             }
         } catch (Exception e) {
             System.err.println("Error al leer los productos: " + e.getMessage());
         } finally {
-            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
             db.closeConectionDB();   
         }
        return data;

@@ -37,10 +37,10 @@ public class shoppingControls {
     public static void readShopHistory(int idUser){
         String query = "SELECT * FROM shopping WHERE id_user = " + idUser;
         ConectionDB db = new ConectionDB();
-        System.out.println("----------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-4s %-25s %-20s %-20s %-20s %-20s", "Id", "| Nombre del Producto", "| Unidades Compradas", "| Precio unitario", "| Precio total",  "| Fecha de Compra");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-4s %-35s %-24s %-20s %-20s %-20s", "Id", "| Nombre del Producto", "| Unidades Compradas", "| Precio unitario", "| Precio total",  "| Fecha de Compra");
         System.out.println("");
-        System.out.println("----------------------------------------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
         boolean data = false;
         try (ResultSet resultSet = db.executeQuery(query)) {
             while (resultSet.next()) {
@@ -51,17 +51,17 @@ public class shoppingControls {
                 double total_price = resultSet.getDouble("total_price");
                 String date = resultSet.getString("date");
     
-                String output = String.format("%-4s | %-23s | %-18s | %-18s | %-18s | %-18s", id, product_name, unit, unit_price, total_price, date);
+                String output = String.format("%-4s | %-33s | %-22s | %-18s | %-18s | %-18s", id, product_name, unit, unit_price, total_price, date);
                 System.out.println(output);
                 data = true;
             }
             if (!data) {
-                System.out.println("------------------------------------------------- LISTA VACIA --------------------------------------------------");
+                System.out.println("-------------------------------------------------------- LISTA VACIA --------------------------------------------------------");
             }
         } catch (Exception e) {
             System.err.println("Error al leer los productos: " + e.getMessage());
         } finally {
-            System.out.println("----------------------------------------------------------------------------------------------------------------");
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
             db.closeConectionDB();   
         }
     }

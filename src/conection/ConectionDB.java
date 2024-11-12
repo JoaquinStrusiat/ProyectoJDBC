@@ -11,7 +11,7 @@ import utils.env;
 
 public class ConectionDB {
     //En la linea de abajo defino la carpeta con las variables de entorno a utilizar
-    private String route = "dev";
+    private String route = "local";
     private String url;
     private String user;
     private String password;
